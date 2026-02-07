@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f4f6f8;
+        }
+        a {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Welcome to Medical Store</h2>
+<h3>Welcome {{ session.user }} to Dashboard</h3>
+
+<a href="/medicines">View Medicines</a>
+<a href="/add_medicine">Add Medicine</a>
+<a href="/logout">Logout</a>
+
+</body>
+</html>
