@@ -1,146 +1,47 @@
-\# 🏥 Pharma Project
+# 🏥 Pharma Management System
 
-
-
-\## Overview
-
-This is a \*\*Medical Pharmacy Management System\*\* built with \*\*Python (Flask)\*\* and \*\*MySQL\*\*.  
-
-It simulates a real-world pharmacy, allowing users to manage medicines, customers, sales, and inventory efficiently.
-
-
+## Overview
+This is a Medical Pharmacy Management System built with Python (Flask) and MySQL.
+It allows users to manage medicines, customers, sales, and inventory efficiently.
 
 ---
 
-
-
-\## Features
-
-\- ✅ User registration and login authentication
-
-\- ✅ Add, update, and delete medicines
-
-\- ✅ Track expiry dates of medicines
-
-\- ✅ Customer purchase and billing system
-
-\- ✅ Dashboard with sales and stock summary
-
-\- ✅ Search and filter medicines by name, type, and expiry
-
-
+## Features
+- ✅ User registration and login authentication
+- ✅ Add, update, and delete medicines
+- ✅ Track expiry dates of medicines
+- ✅ Dashboard with sales and stock summary
+- ✅ Search and filter medicines
 
 ---
 
-
-
-\## Technologies Used
-
-\- \*\*Frontend:\*\* HTML, CSS, Bootstrap  
-
-\- \*\*Backend:\*\* Python, Flask  
-
-\- \*\*Database:\*\* MySQL  
-
-\- \*\*Templates:\*\* Jinja2 for dynamic pages  
-
-
+## Tech Stack
+- Frontend: HTML, CSS, Bootstrap
+- Backend: Python, Flask
+- Database: MySQL
+- Templates: Jinja2
 
 ---
 
+## Installation
 
+1. Clone the repository:
+   git clone <your-repo-url>
 
-\## Installation
+2. Install dependencies:
+   pip install -r requirements.txt
 
-1\. Clone this repository or copy the project folder to your PC.  
+3. Create MySQL database:
+   CREATE DATABASE pharma;
 
-2\. Install Python (version 3.10 or higher).  
+4. Run the application:
+   python app.py
 
-3\. Install required Python packages:
-
-&nbsp;  ```bash
-
-&nbsp;  pip install flask mysql-connector-python
-
-
-
----
-
-
-
-\## Setup MySQL Database
-
-1\. Create a database named `pharma`.  
-
-2\. Import the SQL schema (if provided) or run the commands in `database\_setup.sql`.  
-
-
+5. Open browser:
+   http://127.0.0.1:5000/
 
 ---
 
-
-
-\## Run the Flask App
-
-```bash
-
-python app.py
-
-
-
----
-
-Open your browser and go to:
-
-
-
-http://127.0.0.1:5000/
-
-
-
----
-
-
-
-Usage
-
-
-
-Register as a new user.
-
-
-
-Login to access the dashboard.
-
-
-
-Manage medicines, customers, and sales from the dashboard.
-
-
-
----
-
-
-
-Author
-
-
-
-Keerthana – \[Keerthigoud2004@gmail.com]
-
-
-
----
-
-
-
-License
-
-
-
-This project is for learning purposes and can be freely used.
-
-
-
-
-
+## Author
+Keerthana  
+Email: Keerthigoud2004@gmail.com
