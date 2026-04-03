@@ -7,6 +7,26 @@ app.secret_key = "Pharma_secret"
 db = sqlite3.connect("pharma.db", check_same_thread=False)
 cursor = db.cursor()
 
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    password TEXT
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS medicines (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    quantity INTEGER,
+    price REAL,
+    expiry TEXT
+)
+''')
+
+db.commit()
+
 
 #------------- REGISTER ----------------------------------
 @app.route("/register", methods=["GET", "POST"])
