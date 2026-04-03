@@ -4,9 +4,12 @@ from datetime import date
 
 app = Flask(__name__)
 app.secret_key = "Pharma_secret"
+
+# ---------------- DATABASE ----------------
 db = sqlite3.connect("pharma.db", check_same_thread=False)
 cursor = db.cursor()
 
+# Create tables
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,33 +30,35 @@ CREATE TABLE IF NOT EXISTS medicines (
 
 db.commit()
 
+# ---------------- HOME ROUTE ----------------
+@app.route("/")
+def home():
+    return redirect("/login")
 
-#------------- REGISTER ----------------------------------
+# ---------------- REGISTER ----------------
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        sql = "insert into users (username, password) values (%s, %s)"
-        values = (username, password)
-        cursor.execute(sql, values)
+        sql = "INSERT INTO users (username, password) VALUES (?, ?)"
+        cursor.execute(sql, (username, password))
         db.commit()
 
-        return redirect("login")
+        return redirect("/login")
+    
     return render_template("register.html")
 
-#--------------------LOGIN ----------------------------------
+# ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-        sql = "select * from users where username=%s and password=%s"
-        values = (username, password)
-        cursor.execute(sql, values)
-
+        sql = "SELECT * FROM users WHERE username=? AND password=?"
+        cursor.execute(sql, (username, password))
         user = cursor.fetchone()
 
         if user:
@@ -61,21 +66,18 @@ def login():
             return redirect("/dashboard")
         else:
             return "Invalid username or password"
-        
+    
     return render_template("login.html")
 
-#------------------- DASHBOARD -----------------------------------
+# ---------------- DASHBOARD ----------------
 @app.route("/dashboard")
 def dashboard():
-        if "user" in session:
-             return render_template(
-                  "dashboard.html",
-                  username=session["user"]
-             )
-        else:
-           return redirect("/login")
-        
-#------------------- MEDICINES ----------------------------------------
+    if "user" in session:
+        return render_template("dashboard.html", username=session["user"])
+    else:
+        return redirect("/login")
+
+# ---------------- MEDICINES ----------------
 @app.route("/medicines")
 def medicines():
     if "user" not in session:
@@ -83,16 +85,13 @@ def medicines():
 
     today = date.today()
 
-    # ✅ Use REAL column names
-    cursor.execute(
-        "SELECT name, quantity, price, expiry FROM medicines"
-    )
+    cursor.execute("SELECT name, quantity, price, expiry FROM medicines")
     rows = cursor.fetchall()
 
     medicines = []
 
     for name, quantity, price, expiry in rows:
-        if expiry and expiry < today:
+        if expiry and expiry < str(today):
             status = "Expired"
         elif quantity == 0:
             status = "Out of Stock"
@@ -109,40 +108,32 @@ def medicines():
 
     return render_template("medicines.html", medicines=medicines)
 
-#------------------------- ADD MEDICINE -------------------------------
-
-
-# ---------------- Add Medicine -------------------
+# ---------------- ADD MEDICINE ----------------
 @app.route("/add_medicine", methods=["GET", "POST"])
 def add_medicine():
     if "user" not in session:
-        return redirect("/Login")
-    
+        return redirect("/login")
+
     if request.method == "POST":
         name = request.form["name"]
         quantity = int(request.form["quantity"])
         price = float(request.form["price"])
-        expiry = request.form["expiry"]  # format YYYY-MM-DD
+        expiry = request.form["expiry"]
 
-        sql = "INSERT INTO medicines (name, quantity, price, expiry) VALUES (%s, %s, %s, %s)"
-        values = (name, quantity, price, expiry)
-        cursor.execute(sql, values)
+        sql = "INSERT INTO medicines (name, quantity, price, expiry) VALUES (?, ?, ?, ?)"
+        cursor.execute(sql, (name, quantity, price, expiry))
         db.commit()
 
-        return redirect("/medicines")  # go back to medicines list after adding
+        return redirect("/medicines")
 
     return render_template("add_medicine.html")
 
-
-
-
-#---------------------LOGUOT --------------------------------------
+# ---------------- LOGOUT ----------------
 @app.route("/logout")
 def logout():
-     session.pop("user", None)
-     return redirect("/login")
+    session.pop("user", None)
+    return redirect("/login")
 
-
-
+# ---------------- RUN APP ----------------
 if __name__ == "__main__":
-     app.run(debug=True)
+    app.run(debug=True)
