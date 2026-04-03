@@ -1,17 +1,12 @@
 from flask import Flask, render_template, request, redirect, session
-import mysql.connector
+import sqlite3
 from datetime import date
 
 app = Flask(__name__)
 app.secret_key = "Pharma_secret"
-
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="MySQL@123",
-    database="pharma"
-)
+db = sqlite3.connect("pharma.db", check_same_thread=False)
 cursor = db.cursor()
+
 
 #------------- REGISTER ----------------------------------
 @app.route("/register", methods=["GET", "POST"])
