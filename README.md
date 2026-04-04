@@ -18,7 +18,7 @@ It allows users to manage medicines, customers, sales, and inventory efficiently
 ## Tech Stack
 - Frontend: HTML, CSS, Bootstrap
 - Backend: Python, Flask
-- Database: MySQL
+- Database: SQLite
 - Templates: Jinja2
 
 ---
@@ -31,14 +31,13 @@ It allows users to manage medicines, customers, sales, and inventory efficiently
 2. Install dependencies:
    pip install -r requirements.txt
 
-3. Create MySQL database:
+3. Create SQLite database:
    CREATE DATABASE pharma;
 
 4. Run the application:
    python app.py
 
-5. Open browser:
-   http://127.0.0.1:5000/
+5. https://pharma-flask-app-kdlp.onrender.com
 
 ---
 
